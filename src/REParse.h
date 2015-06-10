@@ -27,9 +27,12 @@ private:
 	std::string errMsg;
 	RENode * parseStream(std::istream& input);
 	
-	RepeaterNode* acceptRepOperator(std::istream& input, char instigator, Context & context, bool & err);
+	RepeaterNode* acceptRepOperator(std::istream& input, char instigator, bool & err);
 	
-	std::string takeWhile(bool (*predicate)(std::istream&), std::istream& input);
+	MatchNode* acceptRange(std::istream& input, char instigator, bool & err);
+	template<class NodeType, char term> NodeType* acceptLiteral(std::istream& input, bool & err);
+	
+	std::string takeWhile(std::function<bool(std::istream&)> predicate, std::istream& input);
 	
 };
 

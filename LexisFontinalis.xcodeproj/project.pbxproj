@@ -28,6 +28,8 @@
 		E90C89751B28962A003C3400 /* ConcatNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E90C89731B28962A003C3400 /* ConcatNode.h */; };
 		E90C897A1B289AA1003C3400 /* LiteralNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90C89781B289AA1003C3400 /* LiteralNode.cpp */; };
 		E90C897B1B289AA1003C3400 /* LiteralNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E90C89791B289AA1003C3400 /* LiteralNode.h */; };
+		E90C897E1B28AA77003C3400 /* MatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90C897C1B28AA77003C3400 /* MatchNode.cpp */; };
+		E90C897F1B28AA77003C3400 /* MatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E90C897D1B28AA77003C3400 /* MatchNode.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,8 @@
 		E90C89731B28962A003C3400 /* ConcatNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConcatNode.h; sourceTree = "<group>"; };
 		E90C89781B289AA1003C3400 /* LiteralNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LiteralNode.cpp; sourceTree = "<group>"; };
 		E90C89791B289AA1003C3400 /* LiteralNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiteralNode.h; sourceTree = "<group>"; };
+		E90C897C1B28AA77003C3400 /* MatchNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MatchNode.cpp; sourceTree = "<group>"; };
+		E90C897D1B28AA77003C3400 /* MatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchNode.h; sourceTree = "<group>"; };
 		E98CCC471B27CC4D00F708CD /* libLexisFontinalis.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libLexisFontinalis.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -122,6 +126,8 @@
 				E90C89671B28240A003C3400 /* DataNode.h */,
 				E90C89781B289AA1003C3400 /* LiteralNode.cpp */,
 				E90C89791B289AA1003C3400 /* LiteralNode.h */,
+				E90C897C1B28AA77003C3400 /* MatchNode.cpp */,
+				E90C897D1B28AA77003C3400 /* MatchNode.h */,
 			);
 			path = DataNodes;
 			sourceTree = "<group>";
@@ -157,6 +163,7 @@
 				E90C895B1B281115003C3400 /* RENode.h in Headers */,
 				E90C896D1B282D31003C3400 /* ParenNode.h in Headers */,
 				E90C89711B28905F003C3400 /* AlternNode.h in Headers */,
+				E90C897F1B28AA77003C3400 /* MatchNode.h in Headers */,
 				E90C895F1B281115003C3400 /* REInst.h in Headers */,
 				E90C89751B28962A003C3400 /* ConcatNode.h in Headers */,
 				E90C89691B28240A003C3400 /* DataNode.h in Headers */,
@@ -221,6 +228,7 @@
 			files = (
 				E90C89741B28962A003C3400 /* ConcatNode.cpp in Sources */,
 				E90C895A1B281115003C3400 /* RENode.cpp in Sources */,
+				E90C897E1B28AA77003C3400 /* MatchNode.cpp in Sources */,
 				E90C896C1B282D31003C3400 /* ParenNode.cpp in Sources */,
 				E90C89681B28240A003C3400 /* DataNode.cpp in Sources */,
 				E90C89701B28905F003C3400 /* AlternNode.cpp in Sources */,

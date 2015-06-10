@@ -31,8 +31,6 @@ RENode * REParse::parseStream(std::istream& input){
 	
 	input >> std::skipws;
 	while(!input.eof() && !err){
-		dataLast = data;
-		data = true;
 		input >> next;
 		switch (next){
 				// Do we have a repetition operator?
@@ -40,7 +38,7 @@ RENode * REParse::parseStream(std::istream& input){
 			case '*':
 			case '+':
 			case '{':
-				read.oper = acceptRepOperator(input, next, context, err);
+				read.oper = acceptRepOperator(input, next, err);
 				data = false;
 				break;
 				
@@ -60,14 +58,18 @@ RENode * REParse::parseStream(std::istream& input){
 				data = false;
 				break;
 				
-				// Do we have a wildcard?
-			case '[':
+			// Do we have a wildcard?
 			case '~':
+			case '[':
+				read.data = acceptRange(input, next, err);
+				break;
 			case '.':
+				read.data = new MatchNode("",true);
 				break;
 				
 				// Do we have a literal?
 			case '\'':
+				read.data = acceptLiteral<LiteralNode, '\''>(input, err);
 				break;
 				
 				
@@ -75,6 +77,13 @@ RENode * REParse::parseStream(std::istream& input){
 			default:
 				false;
 		}
+		
+		
+		
+		
+		// Nothing should go after this
+		dataLast = data;
+		data = true;
 	}
 	
 	while(!context.waiting.empty() && !err){
@@ -93,7 +102,116 @@ RENode * REParse::parseStream(std::istream& input){
 	return ret;
 }
 
-RepeaterNode* REParse::acceptRepOperator(std::istream& input, char instigator, Context & context, bool & err){
+template<char terminal> std::function<bool(std::istream&)> makeEscapeAccepter(bool &inEscape, int &ctSinceSlash){
+	return [&](std::istream& i){
+		bool ret;
+		if(i.eof()){
+			ret = false;
+		} else {
+			char next = i.peek();
+			if(inEscape){
+				if(ctSinceSlash){
+					if(ctSinceSlash > 2){
+						ret = false;
+					} else {
+						ret = isxdigit(next);
+						ctSinceSlash = (ctSinceSlash + 1) % 2;
+						inEscape = !ret || ctSinceSlash;
+					}
+				} else {
+					switch(next){
+						case 'r':
+						case 'n':
+						case 't':
+						case 'v':
+						case '\\':
+						case terminal:
+							inEscape = false;
+							ret = true;
+						case 'x':
+							ctSinceSlash++;
+							ret = true;
+						default:
+							ret = false;
+					}
+				}
+			} else if(next == '\\') {
+				inEscape = true;
+				ret = true;
+			} else {
+				ret = (next != terminal) && (next >= ' ');
+			}
+		}
+		
+		return ret;
+	};
+}
+
+template<class NodeType, char term> NodeType* REParse::acceptLiteral(std::istream& input, bool & err){
+	NodeType * ret = nullptr;
+	err = false;
+	std::string read;
+	std::ostringstream errStream;
+	
+	input >> std::noskipws;
+	
+	bool inEscape = false;
+	int ctSinceSlash = 0;
+	
+	read = takeWhile(makeEscapeAccepter<term>(inEscape, ctSinceSlash), input);
+	
+	if(input.eof()){
+		errStream << "Reached EOF before " << term << " while parsing a literal in " << __func__;
+	} else if (input.peek() < ' '){
+		errStream << "Reached a non-printable character before " << term << " while parsing a literal in " << __func__;
+	} else if (inEscape){
+		errStream << "Encountered an unknown control sequence " << term << " while parsing a literal in " << __func__;
+	} else if (input.peek() != '\'') {
+		errStream << "Unknown error while parsing a literal in " << __func__;
+	}else {
+		input.ignore();
+	}
+	
+	errMsg = errStream.str();
+	if(errMsg != ""){
+		err = true;
+	} else {
+		ret = new NodeType(read);
+	}
+	
+	input >> std::skipws;
+	
+	return ret;
+}
+
+MatchNode * REParse::acceptRange(std::istream &input, char instigator, bool &err) {
+	MatchNode * ret = nullptr;
+	err = false;
+	
+	bool negate = false;
+	switch(instigator){
+		case '~':
+			negate = true;
+			if(!input.eof() && input.peek() == '['){
+				input.ignore();
+			} else {
+				err = true;
+				errMsg = "acceptRange error: ~ must be followed by [";
+				break;
+			}
+		case '[':
+			ret = acceptLiteral<MatchNode, ']'>(input, err);
+			ret->negate = negate;
+			break;
+		default:
+			err = true;
+			errMsg = "Unknown instigating character in acceptRange";
+	}
+	
+	return ret;
+}
+
+RepeaterNode* REParse::acceptRepOperator(std::istream& input, char instigator, bool & err){
 	RepeaterNode * ret = nullptr;
 	err = false;
 	
@@ -174,7 +292,7 @@ RepeaterNode* REParse::acceptRepOperator(std::istream& input, char instigator, C
 	return ret;
 }
 
-std::string REParse::takeWhile(bool (*predicate)(std::istream&), std::istream& input){
+std::string REParse::takeWhile(std::function<bool(std::istream&)> predicate, std::istream& input){
 	std::ostringstream readHere;
 	while(predicate(input)){
 		readHere.put(input.get());

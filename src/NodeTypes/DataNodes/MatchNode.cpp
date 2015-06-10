@@ -1,14 +1,13 @@
 //
-//  LiteralNode.cpp
+//  MatchNode.cpp
 //  LexisFontinalis
 //
 //  Created by Thomas Dickerson on 6/10/15.
 //  Copyright (c) 2015 StickFigure Graphic Productions. All rights reserved.
 //
 
-#include "LiteralNode.h"
+#include "MatchNode.h"
 
-
-REInst * LiteralNode::compile() {
+REInst * MatchNode::compile() {
 	return nullptr;
 }

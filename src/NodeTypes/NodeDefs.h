@@ -12,6 +12,7 @@
 #include "RENode.h"
 #include "DataNodes/DataNode.h"
 #include "DataNodes/LiteralNode.h"
+#include "DataNodes/MatchNode.h"
 
 #include "OperationNodes/OperationNode.h"
 #include "OperationNodes/AlternNode.h"

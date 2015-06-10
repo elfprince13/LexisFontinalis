@@ -9,6 +9,21 @@
 #ifndef __LexisFontinalis__LiteralNode__
 #define __LexisFontinalis__LiteralNode__
 
-#include <stdio.h>
+#include "DataNode.h"
+#include <string>
+
+class LiteralNode : public DataNode {
+public:
+	
+	std::string match;
+	LiteralNode(std::string m) : match(m) {
+	}
+	
+	virtual ~LiteralNode() {
+	}
+	
+	virtual REInst * compile();
+};
+
 
 #endif /* defined(__LexisFontinalis__LiteralNode__) */
