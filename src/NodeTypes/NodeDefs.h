@@ -11,6 +11,7 @@
 
 #include "RENode.h"
 #include "DataNodes/DataNode.h"
+#include "DataNodes/IdentNode.h"
 #include "DataNodes/LiteralNode.h"
 #include "DataNodes/MatchNode.h"
 

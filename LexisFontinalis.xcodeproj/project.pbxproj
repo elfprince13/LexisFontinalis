@@ -30,6 +30,8 @@
 		E90C897B1B289AA1003C3400 /* LiteralNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E90C89791B289AA1003C3400 /* LiteralNode.h */; };
 		E90C897E1B28AA77003C3400 /* MatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90C897C1B28AA77003C3400 /* MatchNode.cpp */; };
 		E90C897F1B28AA77003C3400 /* MatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E90C897D1B28AA77003C3400 /* MatchNode.h */; };
+		E90C89821B28B514003C3400 /* IdentNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90C89801B28B514003C3400 /* IdentNode.cpp */; };
+		E90C89831B28B514003C3400 /* IdentNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E90C89811B28B514003C3400 /* IdentNode.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +58,8 @@
 		E90C89791B289AA1003C3400 /* LiteralNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiteralNode.h; sourceTree = "<group>"; };
 		E90C897C1B28AA77003C3400 /* MatchNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MatchNode.cpp; sourceTree = "<group>"; };
 		E90C897D1B28AA77003C3400 /* MatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchNode.h; sourceTree = "<group>"; };
+		E90C89801B28B514003C3400 /* IdentNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IdentNode.cpp; sourceTree = "<group>"; };
+		E90C89811B28B514003C3400 /* IdentNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentNode.h; sourceTree = "<group>"; };
 		E98CCC471B27CC4D00F708CD /* libLexisFontinalis.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libLexisFontinalis.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -124,6 +128,8 @@
 			children = (
 				E90C89661B28240A003C3400 /* DataNode.cpp */,
 				E90C89671B28240A003C3400 /* DataNode.h */,
+				E90C89801B28B514003C3400 /* IdentNode.cpp */,
+				E90C89811B28B514003C3400 /* IdentNode.h */,
 				E90C89781B289AA1003C3400 /* LiteralNode.cpp */,
 				E90C89791B289AA1003C3400 /* LiteralNode.h */,
 				E90C897C1B28AA77003C3400 /* MatchNode.cpp */,
@@ -157,6 +163,7 @@
 			files = (
 				E90C89591B281115003C3400 /* NodeDefs.h in Headers */,
 				E90C897B1B289AA1003C3400 /* LiteralNode.h in Headers */,
+				E90C89831B28B514003C3400 /* IdentNode.h in Headers */,
 				E90C89611B281115003C3400 /* REParse.h in Headers */,
 				E90C89651B281DB2003C3400 /* OperationNode.h in Headers */,
 				E90C895D1B281115003C3400 /* RepeaterNode.h in Headers */,
@@ -234,6 +241,7 @@
 				E90C89701B28905F003C3400 /* AlternNode.cpp in Sources */,
 				E90C895C1B281115003C3400 /* RepeaterNode.cpp in Sources */,
 				E90C89601B281115003C3400 /* REParse.cpp in Sources */,
+				E90C89821B28B514003C3400 /* IdentNode.cpp in Sources */,
 				E90C897A1B289AA1003C3400 /* LiteralNode.cpp in Sources */,
 				E90C895E1B281115003C3400 /* REInst.cpp in Sources */,
 				E90C89641B281DB2003C3400 /* OperationNode.cpp in Sources */,

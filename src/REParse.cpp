@@ -11,7 +11,7 @@
 
 #include <locale>
 
-REParse::REParse(std::map<std::string, RENode> &eR) : expandReferences(eR) {
+REParse::REParse(std::map<std::string, RENode*> &eR) : expandReferences(eR) {
 }
 
 RENode * REParse::parseStream(std::istream& input){
@@ -75,10 +75,29 @@ RENode * REParse::parseStream(std::istream& input){
 				
 				// Do we have an identifier?
 			default:
-				false;
+				if(isalpha(next)){
+					std::ostringstream identstream(next);
+					identstream << takeWhile([](std::istream& input){
+						char peek;
+						return !input.eof() && (peek = input.peek(), isalnum(peek) || '_' == peek);
+					}, input);
+					std::string identName = identstream.str();
+					if(expandReferences.count(identName)){
+						read.data = new IdentNode(identName, expandReferences);
+					} else {
+						
+					}
+				} else {
+					err = true;
+					read.data = nullptr;
+				}
 		}
 		
 		
+		{
+			// Stack manipulation here.
+			
+		}
 		
 		
 		// Nothing should go after this
@@ -233,9 +252,7 @@ RepeaterNode* REParse::acceptRepOperator(std::istream& input, char instigator, b
 			
 		case '{': {
 			char firstArg, secondArg;
-			input >> firstArg; /*= takeWhile([](std::istream& i){
-								return !i.eof() && isdigit(i.peek());
-								}, input);*/
+			input >> firstArg; 
 			if(input.good()){
 				input >> std::ws;
 				if(input.eof()){

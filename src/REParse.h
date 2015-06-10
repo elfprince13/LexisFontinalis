@@ -15,7 +15,7 @@
 
 class REParse {
 public:
-	REParse(std::map<std::string, RENode>& eR);
+	REParse(std::map<std::string, RENode*>& eR);
 	
 private:
 	struct Context {
@@ -23,7 +23,7 @@ private:
 		std::vector<OperationNode*> waiting;
 	};
 	
-	std::map<std::string, RENode> &expandReferences;
+	std::map<std::string, RENode*> &expandReferences;
 	std::string errMsg;
 	RENode * parseStream(std::istream& input);
 	

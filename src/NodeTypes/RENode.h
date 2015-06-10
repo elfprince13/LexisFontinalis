@@ -21,38 +21,6 @@ public:
 	virtual REInst * compile() = 0;
 	
 	virtual ~RENode() {}
-	
-	/*
-	 enum REOps {
-		Concatenation,
-		Alternation
-		Repeat,
-		Group,
-		Embed,
-		Range,
-		Wildcard,
-		Literal,
-	};
-	 */
 };
-
-
-/*
-
-class RENodeFactory {
-private:
-	bool usable;
-	std::function<RENode*(RENode*)> factoryFunc;
-	RENodeFactory (std::function<RENode*(RENode*)> const & fF) : usable(true), factoryFunc(fF) {};
-public:
-	RENodeFactory () : usable(false), factoryFunc() {};
-	bool isUsable() { return usable; }
-	
-	RENode * operator() (RENode * constructAround);
-	RENodeFactory operator() (RENodeFactory composeWith);
-	
-	static RENodeFactory makeErrorFactory(std::string errContent);
-	static RENodeFactory makeRepeatFactory(char min, char max, bool greedy);
-}; */
 
 #endif /* defined(__LexisFontinalis__RENode__) */
