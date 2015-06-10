@@ -11,6 +11,8 @@
 
 enum {    /* Inst.opcode */
 	Char,
+	Any,
+	Set,
 	Match,
 	Save,
 	Jmp,

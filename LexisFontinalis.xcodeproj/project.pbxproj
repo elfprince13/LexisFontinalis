@@ -26,6 +26,8 @@
 		E90C89711B28905F003C3400 /* AlternNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E90C896F1B28905F003C3400 /* AlternNode.h */; };
 		E90C89741B28962A003C3400 /* ConcatNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90C89721B28962A003C3400 /* ConcatNode.cpp */; };
 		E90C89751B28962A003C3400 /* ConcatNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E90C89731B28962A003C3400 /* ConcatNode.h */; };
+		E90C897A1B289AA1003C3400 /* LiteralNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90C89781B289AA1003C3400 /* LiteralNode.cpp */; };
+		E90C897B1B289AA1003C3400 /* LiteralNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E90C89791B289AA1003C3400 /* LiteralNode.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		E90C896F1B28905F003C3400 /* AlternNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlternNode.h; sourceTree = "<group>"; };
 		E90C89721B28962A003C3400 /* ConcatNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConcatNode.cpp; sourceTree = "<group>"; };
 		E90C89731B28962A003C3400 /* ConcatNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConcatNode.h; sourceTree = "<group>"; };
+		E90C89781B289AA1003C3400 /* LiteralNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LiteralNode.cpp; sourceTree = "<group>"; };
+		E90C89791B289AA1003C3400 /* LiteralNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiteralNode.h; sourceTree = "<group>"; };
 		E98CCC471B27CC4D00F708CD /* libLexisFontinalis.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libLexisFontinalis.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -79,18 +83,8 @@
 				E90C894F1B281115003C3400 /* NodeDefs.h */,
 				E90C89501B281115003C3400 /* RENode.cpp */,
 				E90C89511B281115003C3400 /* RENode.h */,
-				E90C89661B28240A003C3400 /* DataNode.cpp */,
-				E90C89671B28240A003C3400 /* DataNode.h */,
-				E90C89621B281DB2003C3400 /* OperationNode.cpp */,
-				E90C89631B281DB2003C3400 /* OperationNode.h */,
-				E90C896E1B28905F003C3400 /* AlternNode.cpp */,
-				E90C896F1B28905F003C3400 /* AlternNode.h */,
-				E90C89721B28962A003C3400 /* ConcatNode.cpp */,
-				E90C89731B28962A003C3400 /* ConcatNode.h */,
-				E90C896A1B282D31003C3400 /* ParenNode.cpp */,
-				E90C896B1B282D31003C3400 /* ParenNode.h */,
-				E90C89521B281115003C3400 /* RepeaterNode.cpp */,
-				E90C89531B281115003C3400 /* RepeaterNode.h */,
+				E90C89771B28997A003C3400 /* DataNodes */,
+				E90C89761B28996E003C3400 /* OperationNodes */,
 			);
 			path = NodeTypes;
 			sourceTree = "<group>";
@@ -102,6 +96,34 @@
 				E90C89561B281115003C3400 /* REInst.h */,
 			);
 			path = REISA;
+			sourceTree = "<group>";
+		};
+		E90C89761B28996E003C3400 /* OperationNodes */ = {
+			isa = PBXGroup;
+			children = (
+				E90C89621B281DB2003C3400 /* OperationNode.cpp */,
+				E90C89631B281DB2003C3400 /* OperationNode.h */,
+				E90C896E1B28905F003C3400 /* AlternNode.cpp */,
+				E90C896F1B28905F003C3400 /* AlternNode.h */,
+				E90C89721B28962A003C3400 /* ConcatNode.cpp */,
+				E90C89731B28962A003C3400 /* ConcatNode.h */,
+				E90C896A1B282D31003C3400 /* ParenNode.cpp */,
+				E90C896B1B282D31003C3400 /* ParenNode.h */,
+				E90C89521B281115003C3400 /* RepeaterNode.cpp */,
+				E90C89531B281115003C3400 /* RepeaterNode.h */,
+			);
+			path = OperationNodes;
+			sourceTree = "<group>";
+		};
+		E90C89771B28997A003C3400 /* DataNodes */ = {
+			isa = PBXGroup;
+			children = (
+				E90C89661B28240A003C3400 /* DataNode.cpp */,
+				E90C89671B28240A003C3400 /* DataNode.h */,
+				E90C89781B289AA1003C3400 /* LiteralNode.cpp */,
+				E90C89791B289AA1003C3400 /* LiteralNode.h */,
+			);
+			path = DataNodes;
 			sourceTree = "<group>";
 		};
 		E98CCC3E1B27CC4D00F708CD = {
@@ -128,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E90C89591B281115003C3400 /* NodeDefs.h in Headers */,
+				E90C897B1B289AA1003C3400 /* LiteralNode.h in Headers */,
 				E90C89611B281115003C3400 /* REParse.h in Headers */,
 				E90C89651B281DB2003C3400 /* OperationNode.h in Headers */,
 				E90C895D1B281115003C3400 /* RepeaterNode.h in Headers */,
@@ -203,6 +226,7 @@
 				E90C89701B28905F003C3400 /* AlternNode.cpp in Sources */,
 				E90C895C1B281115003C3400 /* RepeaterNode.cpp in Sources */,
 				E90C89601B281115003C3400 /* REParse.cpp in Sources */,
+				E90C897A1B289AA1003C3400 /* LiteralNode.cpp in Sources */,
 				E90C895E1B281115003C3400 /* REInst.cpp in Sources */,
 				E90C89641B281DB2003C3400 /* OperationNode.cpp in Sources */,
 			);

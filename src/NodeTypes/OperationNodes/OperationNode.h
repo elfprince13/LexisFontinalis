@@ -42,7 +42,7 @@ public:
 	}
 	
 	int64_t numChildren() {
-		if (childCount != children.size()){
+		if (childCount != children.size()/* && childCount != -1*/){
 			std::cerr << "Childcount mismatch" << std::endl;
 		}
 		return childCount;

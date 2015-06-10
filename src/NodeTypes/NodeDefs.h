@@ -10,10 +10,13 @@
 #define LexisFontinalis_NodeDefs_h
 
 #include "RENode.h"
-#include "DataNode.h"
-#include "OperationNode.h"
-#include "AlternNode.h"
-#include "RepeaterNode.h"
-#include "ParenNode.h"
+#include "DataNodes/DataNode.h"
+#include "DataNodes/LiteralNode.h"
+
+#include "OperationNodes/OperationNode.h"
+#include "OperationNodes/AlternNode.h"
+#include "OperationNodes/ConcatNode.h"
+#include "OperationNodes/RepeaterNode.h"
+#include "OperationNodes/ParenNode.h"
 
 #endif
