@@ -9,7 +9,7 @@
 #ifndef __LexisFontinalis__RENode__
 #define __LexisFontinalis__RENode__
 
-//#include <iostream>
+#include <iostream>
 #include <vector>
 #include <functional>
 
@@ -21,6 +21,19 @@ public:
 	virtual REInst * compile() = 0;
 	
 	virtual ~RENode() {}
+	
+	template<class NodeType> static void purgeNodeVector(std::vector<NodeType*> & vec, bool warnNull=false){
+		std::for_each(vec.begin(), vec.end(),
+					  [=](NodeType* elm){
+						  if(elm != nullptr){
+							  delete elm;
+						  } else if(warnNull){
+							  std::cerr << "Skipping delete of nullptr in " << __func__ << std::endl;
+						  }
+					  });
+		vec.clear();
+		
+	}
 };
 
 #endif /* defined(__LexisFontinalis__RENode__) */

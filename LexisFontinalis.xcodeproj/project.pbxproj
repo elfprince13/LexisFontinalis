@@ -32,7 +32,31 @@
 		E90C897F1B28AA77003C3400 /* MatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E90C897D1B28AA77003C3400 /* MatchNode.h */; };
 		E90C89821B28B514003C3400 /* IdentNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90C89801B28B514003C3400 /* IdentNode.cpp */; };
 		E90C89831B28B514003C3400 /* IdentNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E90C89811B28B514003C3400 /* IdentNode.h */; };
+		E90C898B1B28C453003C3400 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E90C898A1B28C453003C3400 /* main.cpp */; };
+		E90C89911B28C46F003C3400 /* libLexisFontinalis.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E98CCC471B27CC4D00F708CD /* libLexisFontinalis.dylib */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E90C898F1B28C46B003C3400 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E98CCC3F1B27CC4D00F708CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E98CCC461B27CC4D00F708CD;
+			remoteInfo = LexisFontinalis;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E90C89861B28C453003C3400 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		E90C894F1B281115003C3400 /* NodeDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeDefs.h; sourceTree = "<group>"; };
@@ -60,10 +84,21 @@
 		E90C897D1B28AA77003C3400 /* MatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchNode.h; sourceTree = "<group>"; };
 		E90C89801B28B514003C3400 /* IdentNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IdentNode.cpp; sourceTree = "<group>"; };
 		E90C89811B28B514003C3400 /* IdentNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentNode.h; sourceTree = "<group>"; };
+		E90C89881B28C453003C3400 /* LexisTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LexisTest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E90C898A1B28C453003C3400 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		E90C89921B29489D003C3400 /* StreamUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StreamUtil.h; sourceTree = "<group>"; };
 		E98CCC471B27CC4D00F708CD /* libLexisFontinalis.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libLexisFontinalis.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E90C89851B28C453003C3400 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E90C89911B28C46F003C3400 /* libLexisFontinalis.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E98CCC441B27CC4D00F708CD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -81,6 +116,7 @@
 				E90C89541B281115003C3400 /* REISA */,
 				E90C89571B281115003C3400 /* REParse.cpp */,
 				E90C89581B281115003C3400 /* REParse.h */,
+				E90C89921B29489D003C3400 /* StreamUtil.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -138,10 +174,19 @@
 			path = DataNodes;
 			sourceTree = "<group>";
 		};
+		E90C89891B28C453003C3400 /* LexisTest */ = {
+			isa = PBXGroup;
+			children = (
+				E90C898A1B28C453003C3400 /* main.cpp */,
+			);
+			path = LexisTest;
+			sourceTree = "<group>";
+		};
 		E98CCC3E1B27CC4D00F708CD = {
 			isa = PBXGroup;
 			children = (
 				E90C894D1B281115003C3400 /* src */,
+				E90C89891B28C453003C3400 /* LexisTest */,
 				E98CCC481B27CC4D00F708CD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -150,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				E98CCC471B27CC4D00F708CD /* libLexisFontinalis.dylib */,
+				E90C89881B28C453003C3400 /* LexisTest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -180,6 +226,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		E90C89871B28C453003C3400 /* LexisTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E90C898C1B28C453003C3400 /* Build configuration list for PBXNativeTarget "LexisTest" */;
+			buildPhases = (
+				E90C89841B28C453003C3400 /* Sources */,
+				E90C89851B28C453003C3400 /* Frameworks */,
+				E90C89861B28C453003C3400 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E90C89901B28C46B003C3400 /* PBXTargetDependency */,
+			);
+			name = LexisTest;
+			productName = LexisTest;
+			productReference = E90C89881B28C453003C3400 /* LexisTest */;
+			productType = "com.apple.product-type.tool";
+		};
 		E98CCC461B27CC4D00F708CD /* LexisFontinalis */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E98CCC4B1B27CC4D00F708CD /* Build configuration list for PBXNativeTarget "LexisFontinalis" */;
@@ -206,6 +270,9 @@
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "StickFigure Graphic Productions";
 				TargetAttributes = {
+					E90C89871B28C453003C3400 = {
+						CreatedOnToolsVersion = 6.3.1;
+					};
 					E98CCC461B27CC4D00F708CD = {
 						CreatedOnToolsVersion = 6.3.1;
 					};
@@ -224,11 +291,20 @@
 			projectRoot = "";
 			targets = (
 				E98CCC461B27CC4D00F708CD /* LexisFontinalis */,
+				E90C89871B28C453003C3400 /* LexisTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E90C89841B28C453003C3400 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E90C898B1B28C453003C3400 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E98CCC431B27CC4D00F708CD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -250,7 +326,33 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		E90C89901B28C46B003C3400 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E98CCC461B27CC4D00F708CD /* LexisFontinalis */;
+			targetProxy = E90C898F1B28C46B003C3400 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		E90C898D1B28C453003C3400 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E90C898E1B28C453003C3400 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		E98CCC491B27CC4D00F708CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -351,6 +453,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E90C898C1B28C453003C3400 /* Build configuration list for PBXNativeTarget "LexisTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E90C898D1B28C453003C3400 /* Debug */,
+				E90C898E1B28C453003C3400 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		E98CCC421B27CC4D00F708CD /* Build configuration list for PBXProject "LexisFontinalis" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -7,11 +7,30 @@
 //
 
 #include "REParse.h"
-#include <sstream>
+#include "StreamUtil.h"
 
+#include <sstream>
 #include <locale>
 
+REParse::REParse() : expandReferences() {
+}
+
 REParse::REParse(std::map<std::string, RENode*> &eR) : expandReferences(eR) {
+}
+
+void REParse::contextualizeOperator(OperationNode* oper, Context& context, bool & err){
+	size_t i;
+	for(i = oper->numChildren(); i > 0 && !context.output.empty(); i--){
+		RENode* child = context.output.back();
+		context.output.pop_back();
+		oper->children[i] = child;
+	}
+	if(context.output.empty() && i != 0){
+		err = true;
+		errMsg = "ran out of children to populate operator";
+	} else {
+		context.output.push_back(oper);
+	}
 }
 
 RENode * REParse::parseStream(std::istream& input){
@@ -75,8 +94,9 @@ RENode * REParse::parseStream(std::istream& input){
 				
 				// Do we have an identifier?
 			default:
-				if(isalpha(next)){
-					std::ostringstream identstream(next);
+				if(isalpha(next) || '_' == next){
+					std::ostringstream identstream;
+					identstream << next;
 					identstream << takeWhile([](std::istream& input){
 						char peek;
 						return !input.eof() && (peek = input.peek(), isalnum(peek) || '_' == peek);
@@ -85,17 +105,55 @@ RENode * REParse::parseStream(std::istream& input){
 					if(expandReferences.count(identName)){
 						read.data = new IdentNode(identName, expandReferences);
 					} else {
-						
+						err = true;
+						errMsg = "Unknown identifier " + identName;
 					}
 				} else {
 					err = true;
+					errMsg = "Identifiers must begin with an alphabetical character or _";
 					read.data = nullptr;
 				}
 		}
 		
 		
-		{
+		if(!err){
 			// Stack manipulation here.
+			OperationNode * o1 = (!data) ? read.oper : ((data && dataLast) ? (new ConcatNode(nullptr, nullptr)) : nullptr), *o2;
+			if(o1 != nullptr){
+				while(!context.waiting.empty() &&
+					  (o2 = context.waiting.back(),
+					   o2->precedence != OperationNode::Paren && // Never pop parens
+					   (o1->precedence < o2->precedence || // Never pop anything else for parens either, because paren has highest precdence
+						(o1->precedence == o2->precedence &&
+						 o1->associativity < o2->associativity)))) {
+							context.waiting.pop_back();
+							contextualizeOperator(o2, context, err);
+						}
+				
+				context.waiting.push_back(o1);
+			} else if (!data){
+				// Right Paren
+				bool success = false;
+				while(!context.waiting.empty() && !success && !err){
+					OperationNode * oper = context.waiting.back();
+					context.waiting.pop_back();
+					if(oper->precedence == OperationNode::Paren){
+						success = true;
+					}
+
+					contextualizeOperator(oper, context, err);
+				}
+				if(!success){
+					errMsg = (err ? (errMsg + "\nAdditionally encountered, ") : "") + "Mismatched parens"; // No need for
+					err = true;
+				}
+			}
+			
+			// Don't chain these together: we might have implicitly introduced a ConcatNode.
+			
+			if(data){
+				context.output.push_back(read.data);
+			}
 			
 		}
 		
@@ -106,15 +164,32 @@ RENode * REParse::parseStream(std::istream& input){
 	}
 	
 	while(!context.waiting.empty() && !err){
-		
+		OperationNode * oper = context.waiting.back();
+		context.waiting.pop_back();
+		if(oper->precedence == OperationNode::Paren){
+			err = true;
+			errMsg = "Mismatched parens";
+		} else {
+			contextualizeOperator(oper, context, err);
+		}
 	}
-		
+	
+	if(!err && context.output.size() != 1){
+		err = true;
+		errMsg = "Something went wrong: there should only be one output element";
+	} else if(!err) {
+		ret = context.output.back();
+		context.output.pop_back();
+	}
+	
 	if(err){
 		std::cerr << errMsg << std::endl;
 		if(ret != nullptr) {
 			std::cerr << "Additionally, the erroring parse handler forgot to clean up" << std::endl;
 			delete ret;
 		}
+		RENode::purgeNodeVector(context.output,true);
+		RENode::purgeNodeVector(context.waiting,true);
 		ret = nullptr;
 	}
 	
@@ -181,14 +256,32 @@ template<class NodeType, char term> NodeType* REParse::acceptLiteral(std::istrea
 	
 	if(input.eof()){
 		errStream << "Reached EOF before " << term << " while parsing a literal in " << __func__;
-	} else if (input.peek() < ' '){
-		errStream << "Reached a non-printable character before " << term << " while parsing a literal in " << __func__;
-	} else if (inEscape){
-		errStream << "Encountered an unknown control sequence " << term << " while parsing a literal in " << __func__;
-	} else if (input.peek() != '\'') {
-		errStream << "Unknown error while parsing a literal in " << __func__;
-	}else {
-		input.ignore();
+	} else{
+		char peek = input.peek();
+		if (peek < ' '){
+			errStream << "Reached a non-printable character before " << term << " while parsing a literal in " << __func__;
+		} else if (inEscape){
+			errStream << "Encountered an unknown control sequence " << term << " while parsing a literal in " << __func__;
+		} else if (peek != term) {
+			errStream << "Unknown error while parsing a literal in " << __func__;
+		} else {
+			SAFE_IGNORE(input);
+			/*
+			 bool eof1 = input.peek() == EOF;
+			 bool eof2 = input.eof();
+			 char peek2 = input.peek();
+			char extrapeek2;
+			input >> extrapeek2;
+			bool eof3 = input.eof();
+			bool eof4 = input.peek() == EOF;
+			input.ignore();
+			char peek3 = input.peek();
+			bool eof5 = input.eof();
+			bool eof6 = input.peek() == EOF;*/
+			//std::cerr << peek << " " << eof1 << " " << eof2 << /*"\t" << peek2 << " " << extrapeek2 << " " << eof3 << " " << eof4 << "\t" << peek3 << " " << eof5 << " " << eof6 << */std::endl;
+			
+			//input.ignore();
+		}
 	}
 	
 	errMsg = errStream.str();
@@ -212,7 +305,7 @@ MatchNode * REParse::acceptRange(std::istream &input, char instigator, bool &err
 		case '~':
 			negate = true;
 			if(!input.eof() && input.peek() == '['){
-				input.ignore();
+				SAFE_IGNORE(input);
 			} else {
 				err = true;
 				errMsg = "acceptRange error: ~ must be followed by [";
@@ -220,7 +313,7 @@ MatchNode * REParse::acceptRange(std::istream &input, char instigator, bool &err
 			}
 		case '[':
 			ret = acceptLiteral<MatchNode, ']'>(input, err);
-			ret->negate = negate;
+			if(!err) ret->negate = negate;
 			break;
 		default:
 			err = true;
@@ -247,7 +340,7 @@ RepeaterNode* REParse::acceptRepOperator(std::istream& input, char instigator, b
 			min = 0;
 		case '+':
 			greedy = (input.eof() || (input.peek() != '?')); // No space allowed here
-			if(!greedy) input.ignore();
+			if(!greedy) SAFE_IGNORE(input);
 			break;
 			
 		case '{': {
@@ -268,7 +361,7 @@ RepeaterNode* REParse::acceptRepOperator(std::istream& input, char instigator, b
 								} else{
 									switch(input.peek()){
 										case '}':
-											input.ignore();
+											SAFE_IGNORE(input);
 											break;
 										default:
 											errStream << "Invalid succeeding character to second argument " << input.peek() << " in " << __func__;
@@ -278,7 +371,7 @@ RepeaterNode* REParse::acceptRepOperator(std::istream& input, char instigator, b
 							}
 						} break;
 						case '}':
-							input.ignore();
+							SAFE_IGNORE(input);
 							secondArg = firstArg;
 							break;
 						default:

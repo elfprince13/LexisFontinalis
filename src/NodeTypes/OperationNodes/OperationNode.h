@@ -29,8 +29,8 @@ public:
 	
 	enum Associativity {
 		None = 0,
-		Right = 1,
-		Left = 2
+		Left = 1,
+		Right = 2
 	};
 	
 	std::vector<RENode*> children;
@@ -49,7 +49,7 @@ public:
 	};
 	
 	virtual ~OperationNode() {
-		std::for_each(children.begin(), children.end(), [](RENode* childHere){ delete childHere; });
+		std::for_each(children.begin(), children.end(), [](RENode* childHere){ if(childHere != nullptr){ delete childHere; } });
 		children.clear();
 	}
 };

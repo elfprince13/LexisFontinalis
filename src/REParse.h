@@ -15,7 +15,10 @@
 
 class REParse {
 public:
-	REParse(std::map<std::string, RENode*>& eR);
+	REParse(std::map<std::string, RENode*> &eR);
+	REParse();
+	
+	RENode * parseStream(std::istream& input);
 	
 private:
 	struct Context {
@@ -23,9 +26,9 @@ private:
 		std::vector<OperationNode*> waiting;
 	};
 	
-	std::map<std::string, RENode*> &expandReferences;
+	std::map<std::string, RENode*> expandReferences;
 	std::string errMsg;
-	RENode * parseStream(std::istream& input);
+	void contextualizeOperator(OperationNode* oper, Context& context, bool & err);
 	
 	RepeaterNode* acceptRepOperator(std::istream& input, char instigator, bool & err);
 	
